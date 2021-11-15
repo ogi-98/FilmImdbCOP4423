@@ -1,5 +1,7 @@
 package com.example.filmimdbcop4423;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,7 +12,10 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -30,6 +35,8 @@ public class FirstFragment extends Fragment {
 
 
     private Button buton;
+    private Button butonSearch;
+    private EditText searchTextField;
 
     public FirstFragment() {
         // Required empty public constructor
@@ -75,10 +82,36 @@ public class FirstFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         buton = getView().findViewById(R.id.button);
+        butonSearch = getView().findViewById(R.id.search_bar_button);
+        searchTextField = getView().findViewById(R.id.search_bar_text);
+
 
         buton.setOnClickListener(btnClick);
-    }
 
+        butonSearch.setOnClickListener(searchBtnClick);
+
+
+
+
+    }
+    private View.OnClickListener searchBtnClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            //Navigation.findNavController(v).navigate(R.id.action_firstFragment_to_secondFragment);
+            String searchStr ;
+            searchStr = searchTextField.getText().toString();
+            hideKeyboardFrom(v.getContext(),v);
+
+            if (searchStr.matches("")) {
+                Toast.makeText(v.getContext(), "text null", Toast.LENGTH_SHORT).show();
+
+            }else{
+                Toast.makeText(v.getContext(), "Searching...", Toast.LENGTH_SHORT).show();
+            }
+
+
+        }
+    };
 
     private View.OnClickListener btnClick = new View.OnClickListener() {
         @Override
@@ -87,4 +120,9 @@ public class FirstFragment extends Fragment {
 
         }
     };
+
+    public static void hideKeyboardFrom(Context context, View view) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
 }

@@ -3,9 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/rounded_edittext.xml" value="0.36564102564102563" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.16590678824721378" />
         <entry key="app/src/main/res/layout/fragment_first.xml" value="0.17274569402228976" />
         <entry key="app/src/main/res/layout/fragment_second.xml" value="0.17274569402228976" />
+        <entry key="app/src/main/res/layout/sample_menu.xml" value="0.17274569402228976" />
       </map>
     </option>
   </component>
