@@ -10,18 +10,23 @@
         android:name="com.example.filmimdbcop4423.FirstFragment"
         android:label="fragment_first"
         tools:layout="@layout/fragment_first" >
+
         <action
             android:id="@+id/action_firstFragment_to_secondFragment"
             app:destination="@id/secondFragment"
 
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out"/>
+
     </fragment>
     <fragment
         android:id="@+id/secondFragment"
         android:name="com.example.filmimdbcop4423.SecondFragment"
         android:label="fragment_second"
         tools:layout="@layout/fragment_second" >
+        <argument
+            android:name="SELECTED_FILM"
+            app:argType="com.example.filmimdbcop4423.Model.FilmModel" />
         <action
             android:id="@+id/action_secondFragment_to_firstFragment"
             app:destination="@id/firstFragment"

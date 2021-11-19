@@ -7,10 +7,18 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RatingBar;
+import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.example.filmimdbcop4423.Model.FilmModel;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,33 +27,24 @@ import android.widget.Button;
  */
 public class SecondFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    private Button buton;
 
+    private ImageView image, backImage;
+    private TextView title, releaseDate, overview, popular, voteAvarage, voteCount;
+    private RatingBar ratingBar;
 
+    FilmModel filmModel ;
 
 
     public SecondFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment SecondFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static SecondFragment newInstance(String param1, String param2) {
         SecondFragment fragment = new SecondFragment();
         Bundle args = new Bundle();
@@ -70,6 +69,12 @@ public class SecondFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            filmModel = bundle.getParcelable("film");
+        }
+
         return inflater.inflate(R.layout.fragment_second, container, false);
     }
 
@@ -77,15 +82,48 @@ public class SecondFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        buton = getView().findViewById(R.id.button);
+        image = view.findViewById(R.id.imageView);
+        title = view.findViewById(R.id.title_detail);
+        releaseDate = view.findViewById(R.id.release_date_detail);
+        overview = view.findViewById(R.id.overview_detail);
+        popular = view.findViewById(R.id.textPopular);
+        voteAvarage = view.findViewById(R.id.textVoteAvarage);
+        ratingBar = view.findViewById(R.id.ratingBar2);
+        backImage = view.findViewById(R.id.imageViewBack);
+        voteCount = view.findViewById(R.id.textVoteCount);
 
-        buton.setOnClickListener(btnClick);
+
+
+
+        backImage.setOnClickListener(backClick);
+
+
+        getDataFromInternet();
+    }
+
+    private void getDataFromInternet(){
+
+                Log.d("second", "incoming intent " + filmModel.getMovie_id());
+
+                title.setText(filmModel.getTitle());
+                title.setMovementMethod(new ScrollingMovementMethod());
+                releaseDate.setText("Release Date: " + filmModel.getRelease_date());
+                overview.setText(filmModel.getFilm_overview());
+                popular.setText("Views: " + filmModel.getPopularity().toString());
+                voteAvarage.setText(""+filmModel.getVote_average() / 2);
+                voteCount.setText("Vote Count: " + filmModel.getVote_count());
+
+                ratingBar.setRating(filmModel.getVote_average().floatValue() / 2 );
+
+                Glide.with(getActivity())
+                        .load("https://image.tmdb.org/t/p/w500/" + filmModel.getBackdrop_path())
+                        .into(image);
+
+
     }
 
 
-
-
-    private View.OnClickListener btnClick = new View.OnClickListener() {
+    private View.OnClickListener backClick = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Navigation.findNavController(v).navigate(R.id.action_secondFragment_to_firstFragment);

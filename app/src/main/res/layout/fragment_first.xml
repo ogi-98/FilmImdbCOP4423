@@ -5,7 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".FirstFragment"
-    android:background="#F1C40F">
+    android:background="@color/purple_500"
+
+    >
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -18,11 +22,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:id="@+id/search_bar">
+        android:id="@+id/search_bar"
+        android:background="@drawable/search_bar_container"
+        android:padding="10dp"
+
+        >
 
         <EditText
             android:id="@+id/search_bar_text"
-            android:layout_width="250dp"
+            android:layout_width="230dp"
             android:layout_height="match_parent"
             android:layout_marginRight="20dp"
             android:inputType="text"
@@ -47,6 +55,18 @@
     </LinearLayout>
 
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvFilms"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@+id/search_bar"
+        tools:listitem = "@layout/item_film"
+
+        />
+
+
+<!--
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -75,7 +95,7 @@
 
 
     </LinearLayout>
-
+-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
